@@ -3,6 +3,8 @@ import { createClient } from '@/lib/supabase/server'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import { AppHeader } from '@/components/layout/app-header'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
