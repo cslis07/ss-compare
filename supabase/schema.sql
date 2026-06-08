@@ -295,6 +295,17 @@ alter table notices enable row level security;
 alter table settings enable row level security;
 
 -- Allow all authenticated users to read/write (adjust per business rules)
+drop policy if exists "authenticated_access" on customers;
+drop policy if exists "authenticated_access" on products;
+drop policy if exists "authenticated_access" on cso_companies;
+drop policy if exists "authenticated_access" on departments;
+drop policy if exists "authenticated_access" on users;
+drop policy if exists "authenticated_access" on prescriptions;
+drop policy if exists "authenticated_access" on prescription_items;
+drop policy if exists "authenticated_access" on commission_rates;
+drop policy if exists "authenticated_access" on notices;
+drop policy if exists "authenticated_access" on settings;
+
 create policy "authenticated_access" on customers for all using (auth.role() = 'authenticated');
 create policy "authenticated_access" on products for all using (auth.role() = 'authenticated');
 create policy "authenticated_access" on cso_companies for all using (auth.role() = 'authenticated');
