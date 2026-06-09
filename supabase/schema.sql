@@ -263,6 +263,21 @@ create table if not exists audit_logs (
 );
 
 -- =====================
+-- 제조사별 수수료제한 금액 (Commission Limits)
+-- =====================
+create table if not exists commission_limits (
+  id uuid primary key default uuid_generate_v4(),
+  manufacturer_code text,
+  manufacturer_name text not null,
+  start_month text not null,
+  end_month text default '2999-12',
+  limit_amount decimal(15,2) default 0,
+  note text,
+  is_deleted boolean default false,
+  created_at timestamptz default now()
+);
+
+-- =====================
 -- Default Settings
 -- =====================
 insert into settings (gcode, description, value) values
@@ -293,6 +308,7 @@ alter table prescription_items enable row level security;
 alter table commission_rates enable row level security;
 alter table notices enable row level security;
 alter table settings enable row level security;
+alter table commission_limits enable row level security;
 
 -- Allow all authenticated users to read/write (adjust per business rules)
 drop policy if exists "authenticated_access" on customers;
@@ -305,7 +321,9 @@ drop policy if exists "authenticated_access" on prescription_items;
 drop policy if exists "authenticated_access" on commission_rates;
 drop policy if exists "authenticated_access" on notices;
 drop policy if exists "authenticated_access" on settings;
+drop policy if exists "authenticated_access" on commission_limits;
 
+create policy "authenticated_access" on commission_limits for all using (auth.role() = 'authenticated');
 create policy "authenticated_access" on customers for all using (auth.role() = 'authenticated');
 create policy "authenticated_access" on products for all using (auth.role() = 'authenticated');
 create policy "authenticated_access" on cso_companies for all using (auth.role() = 'authenticated');

@@ -50,12 +50,17 @@ export default function CustomersPage() {
   async function handleSave() {
     if (!selected) return
     if (!selected.name) { alert('거래처명을 입력하세요.'); return }
+    // strip joined relations that aren't real columns
+    const { sales_manager: _sm, cso_company: _cc, ...clean } = selected as any
     if (selected.id) {
-      await supabase.from('customers').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      const { error } = await supabase.from('customers').update({ ...clean, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
-      const { id: _id, created_at: _c, updated_at: _u, ...rest } = selected
-      await supabase.from('customers').insert(rest)
+      const { id: _id, created_at: _c, updated_at: _u, ...rest } = clean
+      const { error } = await supabase.from('customers').insert(rest)
+      if (error) { alert('저장 실패: ' + error.message); return }
     }
+    alert('저장되었습니다.')
     setShowPanel(false)
     fetch()
   }

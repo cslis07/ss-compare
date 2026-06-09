@@ -50,12 +50,17 @@ export default function DepartmentsPage() {
 
   async function handleSave() {
     if (!selectedDept) return
+    const { children: _ch, ...clean } = selectedDept as any
     if (selectedDept.id) {
-      await supabase.from('departments').update(selectedDept).eq('id', selectedDept.id)
+      const { error } = await supabase.from('departments').update(clean).eq('id', selectedDept.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
-      const { id: _id, created_at: _c, ...rest } = selectedDept
-      await supabase.from('departments').insert(rest)
+      const { id: _id, created_at: _c, ...rest } = clean
+      const { data, error } = await supabase.from('departments').insert(rest).select().single()
+      if (error) { alert('저장 실패: ' + error.message); return }
+      if (data) setSelectedDept(data as Department)
     }
+    alert('저장되었습니다.')
     fetch()
   }
 

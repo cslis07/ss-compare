@@ -66,12 +66,17 @@ export default function CommissionRatesPage() {
 
   async function handleSave() {
     if (!selected) return
+    const { sales_manager: _sm, customer: _cu, ...clean } = selected as any
     if (selected.id) {
-      await supabase.from('commission_rates').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      const { error } = await supabase.from('commission_rates').update({ ...clean, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
-      const { id: _id, created_at: _c, updated_at: _u, ...rest } = selected
-      await supabase.from('commission_rates').insert(rest)
+      const { id: _id, created_at: _c, updated_at: _u, ...rest } = clean
+      const { data, error } = await supabase.from('commission_rates').insert(rest).select().single()
+      if (error) { alert('저장 실패: ' + error.message); return }
+      if (data) setSelected(data as CommissionRate)
     }
+    alert('저장되었습니다.')
     fetch()
   }
 

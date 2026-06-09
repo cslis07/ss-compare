@@ -47,11 +47,15 @@ export default function ProductsPage() {
     if (!selected.product_name) { alert('제품명을 입력하세요.'); return }
     if (!selected.manufacturer_name) { alert('제조사명을 입력하세요.'); return }
     if (selected.id) {
-      await supabase.from('products').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      const { error } = await supabase.from('products').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
       const { id: _id, created_at: _c, updated_at: _u, ...rest } = selected
-      await supabase.from('products').insert(rest)
+      const { data, error } = await supabase.from('products').insert(rest).select().single()
+      if (error) { alert('저장 실패: ' + error.message); return }
+      if (data) setSelected(data as Product)
     }
+    alert('저장되었습니다.')
     fetch()
   }
 

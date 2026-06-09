@@ -46,11 +46,19 @@ export default function UsersPage() {
     if (!selected.login_id) { alert('아이디를 입력하세요.'); return }
     if (!selected.name) { alert('이름을 입력하세요.'); return }
     if (selected.id) {
-      await supabase.from('users').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      const { error } = await supabase.from('users').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
       const { id: _id, created_at: _c, updated_at: _u, ...rest } = selected
-      await supabase.from('users').insert(rest)
+      const { data, error } = await supabase.from('users').insert(rest).select().single()
+      if (error) {
+        if (error.code === '23505') alert('이미 존재하는 아이디입니다: ' + selected.login_id)
+        else alert('저장 실패: ' + error.message)
+        return
+      }
+      if (data) setSelected(data as User)
     }
+    alert('저장되었습니다.')
     fetch()
   }
 

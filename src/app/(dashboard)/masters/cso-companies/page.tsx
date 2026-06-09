@@ -49,11 +49,15 @@ export default function CSOCompaniesPage() {
     if (!selected) return
     if (!selected.name) { alert('CSO업체명을 입력하세요.'); return }
     if (selected.id) {
-      await supabase.from('cso_companies').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      const { error } = await supabase.from('cso_companies').update({ ...selected, updated_at: new Date().toISOString() }).eq('id', selected.id)
+      if (error) { alert('저장 실패: ' + error.message); return }
     } else {
       const { id: _id, created_at: _c, updated_at: _u, ...rest } = selected
-      await supabase.from('cso_companies').insert(rest)
+      const { data, error } = await supabase.from('cso_companies').insert(rest).select().single()
+      if (error) { alert('저장 실패: ' + error.message); return }
+      if (data) setSelected(data as CSOCompany)
     }
+    alert('저장되었습니다.')
     fetch()
   }
 
