@@ -158,7 +158,7 @@ export default function CommissionReportPage() {
         <table className="w-full text-xs border-collapse min-w-[1200px]">
           <thead className="sticky top-0 bg-gray-50 z-10">
             <tr className="border-b border-gray-200">
-              {['번', '처방월', '정산월', 'SC코드', '거래처', '자체코드', '사업자번호', 'CSO업체', 'CSO2업체', '부서1', '부서2', '부서3', '영업담당자', '제조사', '정산처', '보험코드', '제품명', '수량', '단가', '금액', '재약율%', '담당율%', '재약수수료', '담당수수료'].map(h => (
+              {['번', '처방월', '정산월', 'SC코드', '거래처', '자체코드', '사업자번호', 'CSO업체', 'CSO2업체', '부서1', '부서2', '부서3', '영업담당자', '제조사', '정산처', '보험코드', '제품명', '수량', '단가', '금액', '제약율%', '담당율%', '제약수수료', '담당수수료'].map(h => (
                 <th key={h} className="px-2 py-1.5 text-left text-gray-600 font-semibold whitespace-nowrap">{h}</th>
               ))}
             </tr>
@@ -204,7 +204,7 @@ export default function CommissionReportPage() {
         <span className="font-semibold text-gray-600">합계</span>
         <span>수량: <strong>{totals.qty.toLocaleString()}</strong></span>
         <span>금액: <strong>{formatNumber(totals.amount)}</strong></span>
-        <span className="text-blue-600">재약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
+        <span className="text-blue-600">제약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
         <span className="text-green-600">담당수수료: <strong>{formatNumber(totals.charge)}</strong></span>
         <span className="text-gray-400 ml-auto">{rows.length}건</span>
       </div>

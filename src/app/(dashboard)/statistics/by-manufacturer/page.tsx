@@ -88,7 +88,7 @@ export default function StatsByManufacturerPage() {
         <table className="w-full text-xs border-collapse">
           <thead className="sticky top-0 bg-gray-50 z-10">
             <tr className="border-b border-gray-200">
-              {['번', '제조사', '성분코드', '제품명', '규격/단위', '부서1', '부서2', '부서3', '영업담당자', '처방금액', '재약수수료', '담당수수료'].map(h => (
+              {['번', '제조사', '성분코드', '제품명', '규격/단위', '부서1', '부서2', '부서3', '영업담당자', '처방금액', '제약수수료', '담당수수료'].map(h => (
                 <th key={h} className="px-2 py-1.5 text-left text-gray-600 font-semibold whitespace-nowrap">{h}</th>
               ))}
             </tr>
@@ -118,7 +118,7 @@ export default function StatsByManufacturerPage() {
       <div className="bg-gray-50 border-t border-gray-200 px-4 py-1.5 flex items-center gap-6 text-xs shrink-0">
         <span className="font-semibold text-gray-600">합계</span>
         <span>금액: <strong>{formatNumber(totals.amount)}</strong></span>
-        <span className="text-blue-600">재약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
+        <span className="text-blue-600">제약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
         <span className="text-green-600">담당수수료: <strong>{formatNumber(totals.charge)}</strong></span>
         <span className="text-gray-400 ml-auto">{rows.length}건</span>
       </div>

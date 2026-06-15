@@ -18,11 +18,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .single()
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
       <AppSidebar />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <AppHeader userName={userProfile?.name || user.email} />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto scrollbar-thin">
           {children}
         </main>
       </div>

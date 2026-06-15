@@ -12,6 +12,7 @@ export const navItems: NavItem[] = [
       { title: '거래처 관리', href: '/masters/customers' },
       { title: '제품 관리', href: '/masters/products' },
       { title: 'CSO업체 관리', href: '/masters/cso-companies' },
+      { title: '거래처별 문전약국 관리', href: '/masters/pharmacy-map' },
       { title: '부서 관리', href: '/masters/departments' },
       { title: '사용자 관리', href: '/masters/users' },
     ],
@@ -20,7 +21,6 @@ export const navItems: NavItem[] = [
     title: '처방전 관리',
     children: [
       { title: '처방전 입력/관리', href: '/prescriptions' },
-      { title: '처방전 등록 현황', href: '/prescriptions/status' },
       { title: '처방전 수신 내역', href: '/prescriptions/received' },
     ],
   },
@@ -28,8 +28,6 @@ export const navItems: NavItem[] = [
     title: '수수료 관리',
     children: [
       { title: '월별 수수료율 관리', href: '/commissions/rates' },
-      { title: '제조사별 수수료제한', href: '/commissions/limits' },
-      { title: '수수료 정산 레포트', href: '/commissions/report' },
       { title: '영업담당자 수금현황', href: '/commissions/collection' },
     ],
   },
@@ -37,6 +35,7 @@ export const navItems: NavItem[] = [
     title: '처방통계',
     children: [
       { title: '처방집계현황', href: '/statistics/summary' },
+      { title: '처방전 등록 현황', href: '/prescriptions/status' },
       { title: '영업담당자별', href: '/statistics/by-manager' },
       { title: '제조사별 제품별', href: '/statistics/by-manufacturer' },
       { title: '부서별', href: '/statistics/by-department' },

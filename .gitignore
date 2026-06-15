@@ -41,3 +41,16 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+.env*
+
+# DB backups (대용량 데이터·자격증명 포함 가능) — 커밋 금지
+/backups/
+backup_dump.ps1
+
+# 로컬 임시 스크립트 (서비스키 포함 — 커밋 금지) / 에디터 설정
+/check_db.py
+/import_collection.py
+/read_excel.py
+/read_excel2.py
+/read_excel_temp.py
+/.claude/

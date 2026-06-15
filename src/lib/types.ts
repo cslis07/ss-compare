@@ -72,12 +72,20 @@ export interface Customer {
   sc_code: string | null
   business_number: string | null
   custom_code: string | null
+  ykiho: string | null
   name: string
   representative: string | null
   address: string | null
+  road_address: string | null
+  detail_address: string | null
   postal_code: string | null
   customer_type: string
+  display_subject: string | null
+  bed_scale: string | null
+  customer_category: string | null
   prescription_start_date: string | null
+  business_category: string | null
+  business_item: string | null
   manufacturer_restriction: string
   department1: string | null
   department2: string | null
@@ -87,6 +95,8 @@ export interface Customer {
   cso2_company_id: string | null
   final_cso_company_id: string | null
   billing_type: string
+  closure_type: string | null
+  closure_date: string | null
   phone: string | null
   fax: string | null
   note: string | null
@@ -95,6 +105,29 @@ export interface Customer {
   updated_at: string
   sales_manager?: User
   cso_company?: CSOCompany
+}
+
+export interface CustomerChangeHistory {
+  id: string
+  sc_code: string | null
+  custom_code: string | null
+  customer_id: string | null
+  old_name: string | null
+  new_name: string | null
+  old_representative: string | null
+  new_representative: string | null
+  old_address: string | null
+  new_address: string | null
+  old_bed_scale: string | null
+  new_bed_scale: string | null
+  old_customer_type: string | null
+  new_customer_type: string | null
+  old_display_subject: string | null
+  new_display_subject: string | null
+  changed_at: string
+  changed_by: string | null
+  source: string | null
+  note: string | null
 }
 
 export interface Product {
@@ -118,6 +151,21 @@ export interface Product {
   is_deleted: boolean
   created_at: string
   updated_at: string
+  // 추가 필드
+  custom_code: string | null
+  is_out_of_stock: boolean
+  settlement_place: string | null
+  billing_type: string | null
+  drug_type: string | null
+  sale_price: number | null
+  ingredient_category: string | null
+  ingredient_name: string | null
+  note2: string | null
+  low_cost_incentive: string | null
+  mfg_commission_rate: number | null
+  additional_mfg_commission_rate: number | null
+  manager_commission_rate: number | null
+  additional_manager_commission_rate: number | null
 }
 
 export interface PrescriptionItem {

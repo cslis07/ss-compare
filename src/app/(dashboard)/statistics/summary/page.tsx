@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { DataPagination } from '@/components/ui/data-pagination'
+
+const STAT_PAGE_SIZE = 30
 
 interface StatRow {
   business_number: string
@@ -27,6 +30,7 @@ export default function StatsSummaryPage() {
   const supabase = createClient()
   const [rows, setRows] = useState<StatRow[]>([])
   const [loading, setLoading] = useState(false)
+  const [statPage, setStatPage] = useState(0)
 
   const currentMonth = new Date().toISOString().slice(0, 7)
   const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().slice(0, 7)
@@ -44,12 +48,14 @@ export default function StatsSummaryPage() {
 
   const fetchStats = useCallback(async () => {
     setLoading(true)
+    setStatPage(0)
     const { data: prescriptions } = await supabase
       .from('prescriptions')
       .select('*, items:prescription_items(*)')
       .eq('is_deleted', false)
       .gte('prescription_month', filters.monthFrom)
       .lte('prescription_month', filters.monthTo)
+      .limit(3000)  // 대용량 방지 안전장치
 
     const aggregated: Record<string, StatRow> = {}
 
@@ -89,6 +95,8 @@ export default function StatsSummaryPage() {
     setRows(result.sort((a, b) => a.customer_name.localeCompare(b.customer_name)))
     setLoading(false)
   }, [filters, supabase])
+
+  const pageRows = rows.slice(statPage * STAT_PAGE_SIZE, (statPage + 1) * STAT_PAGE_SIZE)
 
   const totals = rows.reduce((acc, r) => ({
     qty: acc.qty + r.total_quantity,
@@ -130,7 +138,7 @@ export default function StatsSummaryPage() {
         <table className="w-full text-xs border-collapse min-w-[1000px]">
           <thead className="sticky top-0 bg-gray-50 z-10">
             <tr className="border-b border-gray-200">
-              {['번', '사업자번호', '자체코드', '거래처', '제조사', 'CSO업체', '보험코드', '제품명', '규격/단위', '영업담당자', '수량', '입계금액', '재약수수료', '담당수수료'].map(h => (
+              {['번', '사업자번호', '자체코드', '거래처', '제조사', 'CSO업체', '보험코드', '제품명', '규격/단위', '영업담당자', '수량', '합계금액', '제약수수료', '담당수수료'].map(h => (
                 <th key={h} className="px-2 py-1.5 text-left text-gray-600 font-semibold whitespace-nowrap">{h}</th>
               ))}
             </tr>
@@ -140,9 +148,9 @@ export default function StatsSummaryPage() {
               <tr><td colSpan={14} className="text-center py-8 text-gray-400">조회 중...</td></tr>
             ) : rows.length === 0 ? (
               <tr><td colSpan={14} className="text-center py-8 text-gray-400">조회 버튼을 클릭하세요.</td></tr>
-            ) : rows.map((r, i) => (
+            ) : pageRows.map((r, i) => (
               <tr key={i} className={`border-b border-gray-100 hover:bg-blue-50 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'}`}>
-                <td className="px-2 py-1 text-gray-400">{i + 1}</td>
+                <td className="px-2 py-1 text-gray-400">{statPage * STAT_PAGE_SIZE + i + 1}</td>
                 <td className="px-2 py-1 text-gray-500">{r.business_number}</td>
                 <td className="px-2 py-1 text-gray-500">{r.custom_code}</td>
                 <td className="px-2 py-1 text-gray-800 font-medium">{r.customer_name}</td>
@@ -165,11 +173,16 @@ export default function StatsSummaryPage() {
       <div className="bg-gray-50 border-t border-gray-200 px-4 py-1.5 flex items-center gap-6 text-xs shrink-0">
         <span className="font-semibold text-gray-600">합계</span>
         <span>수량: <strong>{totals.qty.toLocaleString()}</strong></span>
-        <span>입계금액: <strong>{formatNumber(totals.amount)}</strong></span>
-        <span className="text-blue-600">재약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
+        <span>금액: <strong>{formatNumber(totals.amount)}</strong></span>
+        <span className="text-blue-600">제약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
         <span className="text-green-600">담당수수료: <strong>{formatNumber(totals.charge)}</strong></span>
-        <span className="text-gray-400 ml-auto">{rows.length}건</span>
       </div>
+      <DataPagination
+        page={statPage}
+        pageSize={STAT_PAGE_SIZE}
+        total={rows.length}
+        onChange={setStatPage}
+      />
     </div>
   )
 }

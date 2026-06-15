@@ -130,7 +130,7 @@ export default function PrescriptionStatusPage() {
         <table className="w-full text-xs border-collapse min-w-[1100px]">
           <thead className="sticky top-0 bg-gray-50 z-10">
             <tr className="border-b border-gray-200">
-              {['번', 'SC코드', '사업자번호', '거래처', '부서1', '부서2', '부서3', '영업담당자', 'CSO업체', 'CSO2업체', '처방건수', '수령금액', '원외금액', '합계금액', '수수료(재약)', '수수료(담당)'].map(h => (
+              {['번', 'SC코드', '사업자번호', '거래처', '부서1', '부서2', '부서3', '영업담당자', 'CSO업체', 'CSO2업체', '처방건수', '수령금액', '원외금액', '합계금액', '수수료(제약)', '수수료(담당)'].map(h => (
                 <th key={h} className="px-2 py-1.5 text-left text-gray-600 font-semibold whitespace-nowrap">{h}</th>
               ))}
             </tr>
@@ -168,7 +168,7 @@ export default function PrescriptionStatusPage() {
         <span className="font-semibold text-gray-600">합계</span>
         <span>처방건수: <strong>{totals.count.toLocaleString()}</strong></span>
         <span>금액: <strong>{formatNumber(totals.amount)}</strong></span>
-        <span className="text-blue-600">재약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
+        <span className="text-blue-600">제약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
         <span className="text-green-600">담당수수료: <strong>{formatNumber(totals.charge)}</strong></span>
         <span className="text-gray-400 ml-auto">{rows.length}건</span>
       </div>

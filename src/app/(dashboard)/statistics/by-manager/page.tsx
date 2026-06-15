@@ -108,9 +108,9 @@ export default function StatsByManagerPage() {
               <th className="px-2 py-1.5 text-right text-gray-600 font-semibold">처방건수</th>
               <th className="px-2 py-1.5 text-right text-gray-600 font-semibold">원외금액</th>
               <th className="px-2 py-1.5 text-right text-gray-600 font-semibold">합계금액</th>
-              <th className="px-2 py-1.5 text-right text-blue-600 font-semibold">재약수수료</th>
+              <th className="px-2 py-1.5 text-right text-blue-600 font-semibold">제약수수료</th>
               <th className="px-2 py-1.5 text-right text-blue-600 font-semibold">추가수수료</th>
-              <th className="px-2 py-1.5 text-right text-blue-600 font-semibold">총재약수수료</th>
+              <th className="px-2 py-1.5 text-right text-blue-600 font-semibold">총제약수수료</th>
               <th className="px-2 py-1.5 text-right text-green-600 font-semibold">담당수수료</th>
               <th className="px-2 py-1.5 text-right text-green-600 font-semibold">추가수수료</th>
               <th className="px-2 py-1.5 text-right text-green-600 font-semibold">총담당수수료</th>
@@ -144,7 +144,7 @@ export default function StatsByManagerPage() {
         <span className="font-semibold text-gray-600">합계</span>
         <span>처방건수: <strong>{totals.count.toLocaleString()}</strong></span>
         <span>금액: <strong>{formatNumber(totals.amount)}</strong></span>
-        <span className="text-blue-600">재약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
+        <span className="text-blue-600">제약수수료: <strong>{formatNumber(totals.contract)}</strong></span>
         <span className="text-green-600">담당수수료: <strong>{formatNumber(totals.charge)}</strong></span>
         <span className="text-gray-400 ml-auto">{rows.length}명</span>
       </div>
