@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Search, FileSpreadsheet } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getThisMonth } from '@/lib/utils'
 import { Prescription } from '@/lib/types'
 
 export default function PrescriptionsReceivedPage() {
@@ -15,7 +16,7 @@ export default function PrescriptionsReceivedPage() {
   const [loading, setLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
   const [filters, setFilters] = useState({ month: currentMonth, customer: '', manager: '' })
 
   const fetchData = useCallback(async () => {

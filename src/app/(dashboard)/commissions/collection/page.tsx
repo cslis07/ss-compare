@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet, Phone, LifeBuoy } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getPrevMonth } from '@/lib/utils'
 import { DataPagination } from '@/components/ui/data-pagination'
 
 const PAGE_SIZE = 30
@@ -69,9 +70,7 @@ export default function CollectionPage() {
   const [dbError, setDbError] = useState<string | null>(null)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const now = new Date()
-  const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
-  const defaultMonth = prevMonth.toISOString().slice(0, 7)
+  const defaultMonth = getPrevMonth()
 
   const [filters, setFilters] = useState({
     presMonth: defaultMonth,

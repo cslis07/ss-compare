@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { CommissionRate, Product, Customer } from '@/lib/types'
 import { Search, X, FileSpreadsheet, Download } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getThisMonth } from '@/lib/utils'
 import { ProductSearchDialog } from '@/components/search/product-search-dialog'
 import { CustomerSearchDialog } from '@/components/search/customer-search-dialog'
 
@@ -50,7 +51,7 @@ export default function CommissionRatesPage() {
   const [downloading, setDownloading] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
   const [filters, setFilters] = useState({ salesManager: '', insuranceCode: '' })
 
   const loadRates = useCallback(async () => {

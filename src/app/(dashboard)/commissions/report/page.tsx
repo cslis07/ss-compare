@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet, Printer } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getThisMonth, getPrevMonth } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
 interface ReportRow {
@@ -39,8 +40,8 @@ export default function CommissionReportPage() {
   const [rows, setRows] = useState<ReportRow[]>([])
   const [loading, setLoading] = useState(false)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
-  const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
+  const prevMonth = getPrevMonth()
 
   const [filters, setFilters] = useState({
     prescriptionMonthFrom: prevMonth,

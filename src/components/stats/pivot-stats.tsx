@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getThisMonth, getPrevMonth } from '@/lib/utils'
 
 export interface GroupColumn {
   /** Header label */
@@ -80,8 +81,8 @@ export function PivotStats({
   const [loading, setLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
-  const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
+  const prevMonth = getPrevMonth()
 
   const [filters, setFilters] = useState({
     monthFrom: prevMonth,

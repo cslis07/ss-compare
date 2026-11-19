@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getThisMonth } from '@/lib/utils'
 
 interface BenefitRow {
   customer_name: string
@@ -23,7 +24,7 @@ export default function EconomicBenefitPage() {
   const [loading, setLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
   const yearStart = currentMonth.slice(0, 4) + '-01'
   const [filters, setFilters] = useState({ monthFrom: yearStart, monthTo: currentMonth, customer: '' })
 

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, FileSpreadsheet } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
+import { getThisMonth, getPrevMonth } from '@/lib/utils'
 import { DataPagination } from '@/components/ui/data-pagination'
 
 const STAT_PAGE_SIZE = 30
@@ -32,8 +33,8 @@ export default function StatsSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [statPage, setStatPage] = useState(0)
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
-  const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
+  const prevMonth = getPrevMonth()
 
   const [filters, setFilters] = useState({
     monthFrom: prevMonth,

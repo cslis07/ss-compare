@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search, Plus, Save, Trash2, FileSpreadsheet } from 'lucide-react'
 import { cn, formatNumber } from '@/lib/utils'
+import { getThisMonth } from '@/lib/utils'
 
 interface CommissionLimit {
   id: string
@@ -27,7 +28,7 @@ export default function CommissionLimitsPage() {
   const [tableMissing, setTableMissing] = useState(false)
   const [filters, setFilters] = useState({ manufacturer: '' })
 
-  const currentMonth = new Date().toISOString().slice(0, 7)
+  const currentMonth = getThisMonth()
 
   const fetchData = useCallback(async () => {
     setLoading(true)

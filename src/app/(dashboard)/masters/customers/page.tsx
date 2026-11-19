@@ -480,7 +480,7 @@ export default function CustomersPage() {
               <FL>거래처종류</FL><SelF value={selected.customer_type} onChange={v=>setSel('customer_type',v)} options={CUSTOMER_TYPES}/>
               <FL>병상규모</FL><SelF value={selected.bed_scale||''} onChange={v=>setSel('bed_scale',v)} options={BED_SCALES} placeholder="선택"/>
               <FL>영업담당자</FL>
-              <Select value={selected.sales_manager_id||''} onValueChange={v=>setSelected(s=>s?{...s,sales_manager_id:v||null}:s)}>
+              <Select value={selected.sales_manager_id||''} items={{'':'없음',...Object.fromEntries(users.map(u=>[u.id,u.name]))}} onValueChange={v=>setSelected(s=>s?{...s,sales_manager_id:v||null}:s)}>
                 <SelectTrigger className={cn(I,'w-full')}><SelectValue placeholder="없음"/></SelectTrigger>
                 <SelectContent><SelectItem value="" className="text-xs">없음</SelectItem>{users.map(u=><SelectItem key={u.id} value={u.id} className="text-xs">{u.name}</SelectItem>)}</SelectContent>
               </Select>
@@ -715,12 +715,12 @@ export default function CustomersPage() {
             <div className="space-y-2">
               <div className="grid grid-cols-[80px_1fr] items-center gap-2">
                 <label className="text-xs text-right text-gray-600">영업담당자</label>
-                <Select value={bulkEdit.sales_manager_id||''} onValueChange={v=>setBulkEdit(b=>({...b,sales_manager_id:v}))}>
+                <Select value={bulkEdit.sales_manager_id||''} items={{'':'변경 안함',...Object.fromEntries(users.map(u=>[u.id,u.name]))}} onValueChange={v=>setBulkEdit(b=>({...b,sales_manager_id:v}))}>
                   <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="변경 안함"/></SelectTrigger>
                   <SelectContent><SelectItem value="" className="text-xs">변경 안함</SelectItem>{users.map(u=><SelectItem key={u.id} value={u.id} className="text-xs">{u.name}</SelectItem>)}</SelectContent>
                 </Select>
                 <label className="text-xs text-right text-gray-600">CSO업체</label>
-                <Select value={bulkEdit.cso_company_id||''} onValueChange={v=>setBulkEdit(b=>({...b,cso_company_id:v}))}>
+                <Select value={bulkEdit.cso_company_id||''} items={{'':'변경 안함',...Object.fromEntries(csoList.map(c=>[c.id,c.name]))}} onValueChange={v=>setBulkEdit(b=>({...b,cso_company_id:v}))}>
                   <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="변경 안함"/></SelectTrigger>
                   <SelectContent><SelectItem value="" className="text-xs">변경 안함</SelectItem>{csoList.map(c=><SelectItem key={c.id} value={c.id} className="text-xs">{c.name}</SelectItem>)}</SelectContent>
                 </Select>
@@ -772,7 +772,7 @@ function SelF({ value,onChange,options,placeholder }:{ value:string;onChange:(v:
 }
 function CSOSel({ value,list,onChange }:{ value:string|null;list:CSOCompany[];onChange:(v:string)=>void }) {
   return (
-    <Select value={value||''} onValueChange={onChange}>
+    <Select value={value||''} items={{'':'없음',...Object.fromEntries(list.map(c=>[c.id,c.name]))}} onValueChange={onChange}>
       <SelectTrigger className={cn(I,'w-full')}><SelectValue placeholder="없음"/></SelectTrigger>
       <SelectContent><SelectItem value="" className="text-xs">없음</SelectItem>{list.map(c=><SelectItem key={c.id} value={c.id} className="text-xs">{c.name}</SelectItem>)}</SelectContent>
     </Select>

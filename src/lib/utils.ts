@@ -15,3 +15,12 @@ export function formatMonth(ym: string): string {
   const [y, m] = ym.split('-')
   return `${y}년 ${parseInt(m)}월`
 }
+
+// 한국 시간(UTC+9) 기준 'YYYY-MM' — 브라우저·서버 시간대와 무관
+function kstYearMonth(offset: number): string {
+  const k = new Date(Date.now() + 9 * 60 * 60 * 1000)
+  const d = new Date(Date.UTC(k.getUTCFullYear(), k.getUTCMonth() + offset, 1))
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`
+}
+export function getThisMonth(): string { return kstYearMonth(0) }
+export function getPrevMonth(): string { return kstYearMonth(-1) }
